@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Video player</title>
+<style>
+.container{
+position: relative;
+top: 30px;
+left: auto;
+justify-content: center;
+background = #000;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<video src="vid.mp4" width="300px" id="v"></video>
+<br><br>
+<button id="b">play</button>
+<p id="p">00:00/00:00</p>
+<input type="range" min="0" max="100" step="1" id="i" value="0">
+</div>
+
+<script>
+
+function gebi(id){
+ return document.getElementById(id)
+}
+
+
+function cl(varia){
+return console.log(varia)
+}
+var vid = gebi("v")
+var btn = gebi("b")
+var p = gebi("p")
+var i = gebi("i")
+
+btn.addEventListener('click', playp)
+
+function playp(){
+
+if(vid.paused){
+
+	vid.play()
+	btn.innerHTML = "pause"
+
+}else{
+
+	vid.pause()
+	btn.innerHTML = "play"
+}
+
+}
+
+window.addEventListener('load', dur)
+
+
+vid.addEventListener('timeupdate', dur)
+vid.addEventListener('timeupdate', slide)
+i.addEventListener('input', seekto)
+function dura(){
+
+}
+function dur(){
+	durmins = Math.floor(vid.duration / 60)
+	dursec = Math.floor(vid.duration - durmins * 60)
+	curmins = Math.floor(vid.currentTime / 60)
+	cursec = Math.floor(vid.currentTime  - curmins * 60)
+	if(durmins < 10){
+		durmins = "0" + durmins
+	}
+
+	if(dursec < 10){
+		dursec = "0" + dursec 
+	}
+	if(curmins < 10){
+		curmins = "0" + curmins
+	}
+
+	if(cursec < 10){
+		cursec = "0" + cursec 
+	}
+	p.innerHTML = curmins + ":" + cursec + "/" + durmins + ":" + dursec 
+
+	
+}
+
+function slide(){
+i.value = vid.currentTime * (100 / vid.duration)
+}
+
+function seekto(){
+	seekto = vid.duration * (i.value / 100)
+	vid.currentTime = seekto
+}
+
+</script>
+
+</body>
+</html>
